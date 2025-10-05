@@ -2,6 +2,18 @@
 
 欢迎来到链上空投栏目，这里可以记录和展示各种Web3空投事件
 
+## REPPO
+
+官网：https://reppo.ai?referral=did:privy:cmgdocp4t00hwif0cjaelxth7
+
+官推：https://x.com/Repponetwork
+
+每日完成签到、社交任务
+
+推荐KOL：[先知 $M](https://x.com/Crypto_He/status/1974761225927201164) 
+
+------
+
 ## SIDEKICK
 
 观看直播https://sidekick.fans/ 看直播获取代币K，第一轮空投已发
