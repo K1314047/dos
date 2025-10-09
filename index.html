@@ -14,7 +14,15 @@
     window.$docsify = {
       name: '币安Alpha项目简介',
       repo: '',
-      loadNavbar: '_navbar.md'
+      loadNavbar: '_navbar.md',
+      search: {
+        maxAge: 86400000, // 缓存一天，单位毫秒
+        paths: 'auto',    // 自动搜索所有页面
+        placeholder: '搜索文档...', // 搜索框占位符
+        noData: '没有找到结果',    // 无结果提示
+        depth: 6,         // 搜索标题的最大层级
+        // 可以根据需要添加更多配置
+      }
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
