@@ -2,6 +2,16 @@
 
 欢迎来到链上空投栏目，这里可以记录和展示各种Web3空投事件
 
+BREVIS
+
+官网：https://proving-grounds.brevis.network/
+
+完成社交任务（现在完成任务不一定有空投，是去争取空投资格）
+
+推荐KOL：[加密大叔](https://x.com/icryptouncle/status/1978009053617078434)
+
+------
+
 ## REPPO
 
 官网：https://reppo.ai?referral=did:privy:cmgdocp4t00hwif0cjaelxth7
