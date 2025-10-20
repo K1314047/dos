@@ -10,6 +10,7 @@
 </head>
 <body>
   <div id="app"></div>
+
   <script>
     window.$docsify = {
       name: '币安Alpha项目简介',
@@ -21,10 +22,18 @@
         placeholder: '搜索文档...', // 搜索框占位符
         noData: '没有找到结果',    // 无结果提示
         depth: 6,         // 搜索标题的最大层级
-        // 可以根据需要添加更多配置
-      }
+      },
+      // 启用搜索插件
+      plugins: [
+        window.DocsifySearch
+      ]
     }
   </script>
+
+  <!-- Docsify 主脚本 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Docsify 搜索插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-plugin-search@2/docsify-search.min.js"></script>
+
 </body>
 </html>

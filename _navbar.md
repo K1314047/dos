@@ -3,7 +3,7 @@
 * 工具栏
   * [项目复盘](project-review.md)
   * [链上空投](chain-airdrop.md)
-  * [知乎地址](https://www.zhihu.com/people/ysgdaydayup)
+  * [我的工具](gongju.md)
   * [掘金地址](https://juejin.cn/user/2770425031690333/posts)
   * [Gitee地址](https://gitee.com/ysgdaydayup)
 ​
