@@ -41,3 +41,11 @@ curl -fsSL https://raw.githubusercontent.com/eooce/ssh_tool/main/ssh_tool.sh -o 
 ```
 
 文章URL：https://blog.1314047.xyz/example-042
+
+# Serv00探针
+
+```
+bash <(curl -Ls https://raw.githubusercontent.com/frankiejun/serv00-play/main/start.sh) --install
+```
+
+文章URL：https://github.com/frankiejun/serv00-play

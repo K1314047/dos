@@ -1,14 +1,15 @@
-<!-- _navbar.md -->
-​
-* 工具栏
+* [首页](/)
+* 区块链
+
+  * [Binance Alpha](xiangmujianjie.md)
   * [项目复盘](project-review.md)
   * [链上空投](chain-airdrop.md)
-  * [我的工具](gongju.md)
-  * [掘金地址](https://juejin.cn/user/2770425031690333/posts)
-  * [Gitee地址](https://gitee.com/ysgdaydayup)
-​
-​
-* 链接到我
-  * [个人主页](https://001100.best/)
-  * [博客](https://blog.001100.best/)
-  * [导航](https://nav.001100.best/)
+  * [封面](zh-cn/cover.md)
+
+
+* 配置
+  * [配置项](zh-cn/configuration.md)
+  * [主题](zh-cn/themes.md)
+  * [使用插件](zh-cn/plugins.md)
+  * [Markdown 配置](zh-cn/markdown.md)
+  * [代码高亮](zh-cn/language-highlight.md)
