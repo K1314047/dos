@@ -42,13 +42,14 @@ curl -fsSL https://raw.githubusercontent.com/eooce/ssh_tool/main/ssh_tool.sh -o 
 
 文章URL：https://blog.1314047.xyz/example-042
 
-## Serv00探针
+## 哪吒被监控删除代码
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/frankiejun/serv00-play/main/start.sh) --install
+systemctl disable --now nezha-agent
+rm -rf /opt/nezha/agent
 ```
 
-文章URL：https://github.com/frankiejun/serv00-play
+文章URL：https://www.nodeseek.com/post-93761-1
 
 ## Alpine一键安装Reality/Hysteria2
 
