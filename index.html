@@ -1,20 +1,220 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>G.Ark Docs</title>
   <link rel="stylesheet" href="https://unpkg.com/docsify/themes/vue.css" />
-   <style>
+  
+  <style>
+    /* 导航栏样式 */
     .app-nav a {
-      margin: 0 15px;  /* 左右间距各15px */
+      margin: 0 15px;
+    }
+    
+    /* 三栏布局样式 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* 主容器 */
+    .docsify-container {
+      display: flex;
+      min-height: 100vh;
+      padding-top: 60px; /* 为顶部导航栏留出空间 */
+    }
+    
+    /* 左侧边栏 - 集成Docsify原有样式 */
+    .sidebar {
+      width: 280px;
+      min-width: 280px;
+      background: #f7f7f7;
+      border-right: 1px solid #eee;
+      overflow-y: auto;
+      position: fixed;
+      left: 0;
+      top: 60px; /* 在顶部导航栏下方 */
+      height: calc(100vh - 60px);
+      z-index: 100;
+    }
+    
+    /* 确保Docsify侧边栏正确显示 */
+    .sidebar .sidebar-nav {
+      padding: 20px;
+    }
+    
+    /* 主内容区域 */
+    .main-content {
+      flex: 1;
+      margin: 0 320px 0 280px; /* 左右留出侧边栏空间 */
+      padding: 20px 40px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* 右侧文章目录 */
+    .article-toc {
+      width: 300px;
+      min-width: 300px;
+      background: #fafafa;
+      border-left: 1px solid #eee;
+      padding: 20px;
+      position: fixed;
+      right: 0;
+      top: 60px; /* 在顶部导航栏下方 */
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      z-index: 99;
+    }
+    
+    /* 文章目录样式 */
+    .article-toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    
+    .article-toc li {
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    
+    .article-toc a {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+      display: block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .article-toc a:hover {
+      background: #e6f3ff;
+      color: #007acc;
+    }
+    
+    .article-toc .active {
+      background: #007acc;
+      color: white;
+    }
+    
+    /* 目录标题 */
+    .toc-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 8px;
+    }
+    
+    /* 确保Docsify顶部导航栏正确显示 */
+    .app-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+    
+    /* 搜索框样式调整 */
+    .search {
+      margin-left: auto;
+      margin-right: 20px;
+    }
+    
+    .search input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    /* 搜索下拉框样式 */
+    .search .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      min-width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 1001;
+    }
+    
+    .search .dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .search .dropdown-menu a:hover {
+      background: #f5f5f5;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+      .article-toc {
+        display: none;
+      }
+      .main-content {
+        margin-right: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+      .search {
+        margin-right: 10px;
+      }
+      .search input {
+        width: 150px;
+      }
     }
   </style>
-  
 </head>
 <body>
+  <!-- Docsify会自动在这里插入顶部导航栏 -->
   <div id="app"></div>
+
+  <!-- 三栏布局容器 -->
+  <div class="docsify-container">
+    <!-- 左侧边栏 - Docsify会自动填充 -->
+    <div class="sidebar">
+      <div data-app-id="sidebar"></div>
+    </div>
+    
+    <!-- 主内容区域 - Docsify会自动填充 -->
+    <div class="main-content">
+      <!-- 内容由Docsify自动渲染 -->
+    </div>
+    
+    <!-- 右侧文章目录 -->
+    <div class="article-toc">
+      <div class="toc-title">📑 文章目录</div>
+      <div id="article-toc"></div>
+    </div>
+  </div>
 
   <script>
     window.$docsify = {
@@ -22,21 +222,153 @@
       repo: '',
       loadSidebar: true,
       loadNavbar: true,
-      subMaxLevel: 2,
+      subMaxLevel: 3,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
       search: {
         maxAge: 86400000,
         paths: 'auto',
         placeholder: 'Type to search',
         noData: '找不到相关内容',
         depth: 2,
+        // 确保搜索框位置正确
+        placement: 'auto',
+        // 搜索框热键
+        hotkeys: ['s', '/'],
+      },
+      // 自定义插件配置
+      plugins: [
+        // 文章目录生成插件
+        function(hook, vm) {
+          hook.mounted(function() {
+            // 移动Docsify生成的侧边栏到我们的容器中
+            const originalSidebar = document.querySelector('.sidebar-nav');
+            const ourSidebarContainer = document.querySelector('[data-app-id="sidebar"]');
+            if (originalSidebar && ourSidebarContainer) {
+              ourSidebarContainer.appendChild(originalSidebar);
+            }
+            
+            // 移动主内容到我们的容器中
+            const originalContent = document.querySelector('.markdown-section');
+            const ourContentContainer = document.querySelector('.main-content');
+            if (originalContent && ourContentContainer) {
+              ourContentContainer.appendChild(originalContent);
+            }
+            
+            // 确保搜索框在导航栏中正确显示
+            setTimeout(() => {
+              const searchInput = document.querySelector('.search input');
+              if (searchInput) {
+                searchInput.placeholder = '搜索文档...';
+              }
+            }, 100);
+          });
+          
+          hook.doneEach(function() {
+            // 获取当前页面的标题
+            const content = document.querySelector('.markdown-section');
+            if (!content) return;
+            
+            const headings = content.querySelectorAll('h1, h2, h3, h4');
+            const tocContainer = document.getElementById('article-toc');
+            
+            if (headings.length > 0) {
+              let tocHTML = '<ul>';
+              
+              headings.forEach((heading, index) => {
+                const level = parseInt(heading.tagName.substring(1));
+                const text = heading.textContent;
+                const id = heading.id || `heading-${index}`;
+                
+                // 确保标题有ID
+                if (!heading.id) {
+                  heading.id = id;
+                }
+                
+                // 根据标题级别添加缩进
+                const padding = (level - 1) * 15;
+                
+                tocHTML += `
+                  <li style="padding-left: ${padding}px">
+                    <a href="#${id}" data-id="${id}" onclick="handleTocClick('${id}')">${text}</a>
+                  </li>
+                `;
+              });
+              
+              tocHTML += '</ul>';
+              tocContainer.innerHTML = tocHTML;
+              
+              // 添加滚动监听
+              addScrollListener(headings);
+            } else {
+              tocContainer.innerHTML = '<p>本文暂无目录</p>';
+            }
+          });
+          
+          // 滚动监听函数
+          function addScrollListener(headings) {
+            const tocLinks = document.querySelectorAll('#article-toc a');
+            const observerOptions = {
+              rootMargin: '-20% 0px -70% 0px',
+              threshold: 0
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocLink = document.querySelector(`#article-toc a[href="#${id}"]`);
+                
+                if (entry.isIntersecting) {
+                  // 移除所有active类
+                  tocLinks.forEach(link => link.classList.remove('active'));
+                  // 添加当前active类
+                  if (tocLink) {
+                    tocLink.classList.add('active');
+                  }
+                }
+              });
+            }, observerOptions);
+            
+            // 观察所有标题
+            headings.forEach(heading => {
+              observer.observe(heading);
+            });
+          }
+        }
+      ]
+    };
+
+    // 处理目录点击事件
+    function handleTocClick(id) {
+      event.preventDefault();
+      
+      const targetElement = document.getElementById(id);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
         
+        history.replaceState(null, null, `#${id}`);
       }
     }
+
+    // 添加全局点击事件监听器来处理目录链接
+    document.addEventListener('click', function(e) {
+      if (e.target.matches('#article-toc a')) {
+        e.preventDefault();
+        const href = e.target.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const id = href.substring(1);
+          handleTocClick(id);
+        }
+      }
+    });
   </script>
 
-
   <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
-  <!--全文搜索,直接用官方提供的无法生效-->
+  <!-- 全文搜索 -->
   <script src="https://unpkg.com/docsify/lib/plugins/search.min.js"></script>
   <!-- 复制代码到剪贴板 -->
   <script src="//unpkg.com/docsify-copy-code"></script>
@@ -44,14 +376,8 @@
   <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
   <!-- 字数统计 -->
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-  <!--Java代码高亮-->
+  <!-- Java代码高亮 -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
-  
-<nav>
-    <a href="#/">EN</a>
-    <a href="#/zh-cn/">中文</a>
-  </nav>
-  <div id="app"></div>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
 </body>
 </html>
