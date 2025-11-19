@@ -6,9 +6,31 @@
 
 ========================【常用alpha工具】========================
 
+## 11月19日币安Alpha上线项目简介
+
+**GAIB (GAIB) 简介：**
+
+创立于2024年，融资1500万美元，是AI算力的经济层，它将GPU资产转化为一种新型的生息资产。GAIB推出了人工智能合成资产AID，使投资者能够无缝参与人
+
+工智能经济，并从人工智能算力收益中获得实际回报。 
+
+总量：10亿，发行在以太坊和BSC链 
+
+流通量：2.0483亿（20.48%） 
+
+合约地址：0xc19d38925f9f645337b1d1f37baf3c0647a48e50 
+
+上线时间：币安Alpha 18：00，币安合约 20日17：00 
+
+上线交易所：币安Alpha，bitget，抹茶，kraken（20：00） 团队成员：①Kony Kwong（CEO，创始人），中国香港，前Huobi Global并购负责人。②Mathilda 
+
+Sun（项目负责人），中国，专注于GAIB的 DeFi集成和生态扩展。 评价：创立于2024年，融资1500万美元，国人团队，人工智能算力的经济层，Amber，
+
+HackVC，Faction领投，有KOL轮，所以X上某些大V们很活跃。上线了币安合约，抹茶有盘前交易，目前价格0.25u。
+
 ## 11月18日币安Alpha上线项目简介
 
-Datagram Network (DGRAM)简介：
+**Datagram Network (DGRAM)简介：**
 
 创立于2018年，融资400万美元，全球AI驱动的Hyper-Fabric DePIN网络，专注于实时连接性和跨网络互操作性。 
 
@@ -28,7 +50,9 @@ Datagram Network (DGRAM)简介：
 
 **Play Solana （PLAY） 简介：**
 
-基于Solana的Web3掌上游戏机。 总量：50亿 流通量：11.35亿（22.7%） 
+基于Solana的Web3掌上游戏机。 
+
+总量：50亿 流通量：11.35亿（22.7%） 
 
 合约地址：**PLAYs3GSSadH2q2JLS7djp7yzeT75NK78XgrE5YLrfq** 
 
