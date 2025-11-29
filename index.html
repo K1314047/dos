@@ -1,405 +1,169 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>G.Ark Docs</title>
+
   <link rel="stylesheet" href="https://unpkg.com/docsify/themes/vue.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <style>
-    /* 全局样式 */
-    * {
-      box-sizing: border-box;
-    }
-    
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #f8fafc;
+      background: #f8fafc;
       color: #334155;
       line-height: 1.6;
     }
-    
-    /* 顶部导航栏样式 */
+
+    /* 顶部导航 */
     .app-nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       height: 64px;
       display: flex;
       align-items: center;
-      padding: 0 24px;
-      color: white;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1200;
+      background: linear-gradient(135deg,#1e293b 0%,#334155 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
-    
-    .app-nav a {
-      margin: 0 16px;
-      color: #e2e8f0;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-      position: relative;
-    }
-    
-    .app-nav a:hover {
-      color: white;
-    }
-    
-    .app-nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #3b82f6;
-      transition: width 0.3s;
-    }
-    
-    .app-nav a:hover::after {
-      width: 100%;
-    }
-    
-    .app-name {
-      font-weight: 700;
-      font-size: 20px;
-      color: white;
-      margin-right: 32px;
-    }
-    
-    /* 主容器 - 修复空白问题 */
+    .app-nav .left { display:flex; align-items:center; gap:16px; }
+    .app-nav .app-name { font-weight:700; font-size:20px; color:#fff; }
+    .app-nav a { color:#e2e8f0; text-decoration:none; font-weight:500; }
+    .app-nav a:hover { color:#fff; }
+
+    /* 整体容器，留出顶部空间 */
     .docsify-container {
       display: flex;
       min-height: 100vh;
-      padding-top: 64px; /* 为顶部导航栏留出空间 */
+      padding-top: 64px; /* 顶部导航高度 */
     }
-    
-    /* 左侧边栏 */
+
+    /* 左侧栏 */
     .sidebar {
+      position: fixed;
+      left: 0;
+      top: 64px;
       width: 280px;
-      min-width: 280px;
-      background: white;
+      height: calc(100vh - 64px);
+      background: #fff;
       border-right: 1px solid #e2e8f0;
       overflow-y: auto;
-      position: fixed;
-      left: 0;
-      top: 64px; /* 在顶部导航栏下方 */
-      height: calc(100vh - 64px);
-      z-index: 100;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+      z-index: 900;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.04);
     }
-    
-    /* 左侧搜索区域 */
-    .sidebar-search {
-      padding: 20px;
-      border-bottom: 1px solid #e2e8f0;
-      background: white;
-      position: relative;
-    }
-    
-    .search-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #475569;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .search-title svg {
-      margin-right: 8px;
-      color: #64748b;
-    }
-    
-    .search-container {
-      position: relative;
-      margin-bottom: 8px;
-    }
-    
+    .sidebar-search { padding:20px; border-bottom:1px solid #e2e8f0; background:#fff; }
+    .search-title { font-size:14px; font-weight:600; color:#475569; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .search-container { position:relative; }
     .search-input {
-      width: 100%;
-      padding: 10px 12px 10px 36px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #f8fafc;
-      transition: all 0.2s;
+      width:100%;
+      padding:10px 12px 10px 36px;
+      border-radius:8px;
+      border:1px solid #cbd5e1;
+      background:#f8fafc;
+      font-size:14px;
     }
-    
-    .search-input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      background: white;
-    }
-    
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #64748b;
-    }
-    
-    .search-hotkey {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-top: 4px;
-      display: block;
-    }
-    
-    /* 确保Docsify侧边栏正确显示 */
-    .sidebar .sidebar-nav {
-      padding: 16px 20px;
-    }
-    
-    .sidebar-nav ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    
-    .sidebar-nav li {
-      margin: 4px 0;
-    }
-    
-    .sidebar-nav a {
-      display: block;
-      padding: 8px 12px;
-      text-decoration: none;
-      color: #475569;
-      border-radius: 6px;
-      transition: all 0.2s;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    
-    .sidebar-nav a:hover {
-      background: #f1f5f9;
-      color: #1e293b;
-    }
-    
-    .sidebar-nav .active > a {
-      background: #eff6ff;
-      color: #3b82f6;
-      font-weight: 600;
-    }
-    
-    /* 主内容区域 - 修复内容被遮挡问题 */
-    .main-content {
-      flex: 1;
-      margin: 0 320px 0 280px;
-      padding: 32px 48px;
-      max-width: 100%;
-      box-sizing: border-box;
-      background: white;
-      min-height: calc(100vh - 64px);
-      box-shadow: 0 0 0 1px #e2e8f0;
-      /* 确保内容不会在导航栏下显示 */
-      position: relative;
-      z-index: 1;
-    }
-    
-    /* 修复Docsify内容区域的定位 */
-    .markdown-section {
-      position: relative;
-      z-index: 1;
-    }
-    
-    /* 右侧文章目录 */
+    .search-input:focus { outline:none; border-color:#3b82f6; background:#fff; box-shadow:0 0 0 3px rgba(59,130,246,0.08); }
+    .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#64748b; }
+    .search-hotkey { display:block; font-size:12px; color:#94a3b8; margin-top:6px; }
+
+    /* Docsify 侧边栏渲染容器的样式衔接 */
+    .sidebar .sidebar-nav { padding:16px 12px; }
+    .sidebar-nav a { display:block; padding:8px 12px; border-radius:6px; color:#475569; text-decoration:none; font-weight:500; }
+    .sidebar-nav a:hover { background:#f1f5f9; color:#1e293b; }
+
+    /* 右侧目录 */
     .article-toc {
-      width: 300px;
-      min-width: 300px;
-      background: white;
-      border-left: 1px solid #e2e8f0;
-      padding: 24px;
       position: fixed;
       right: 0;
-      top: 64px; /* 在顶部导航栏下方 */
+      top: 64px;
+      width: 300px;
       height: calc(100vh - 64px);
-      overflow-y: auto;
-      z-index: 99;
-      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.04);
+      background:#fff;
+      border-left:1px solid #e2e8f0;
+      padding:20px;
+      overflow-y:auto;
+      z-index: 900;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.04);
     }
-    
-    /* 文章目录样式 */
-    .toc-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      color: #1e293b;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #3b82f6;
-      display: flex;
-      align-items: center;
+    .toc-title { font-weight:600; color:#1e293b; margin-bottom:12px; display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:2px solid #3b82f6; }
+    .article-toc a { display:block; padding:6px 8px; border-radius:6px; color:#64748b; text-decoration:none; }
+    .article-toc a:hover { background:#f1f5f9; color:#334155; }
+    .article-toc a.active { background:#eff6ff; color:#3b82f6; font-weight:600; border-left:2px solid #3b82f6; }
+
+    /* 中间主内容 */
+    .main-content {
+      flex:1;
+      margin: 0 320px 0 280px; /* 左右预留宽度（与侧栏宽度一致 + 间距） */
+      padding: 28px 40px;
+      min-height: calc(100vh - 64px);
+      background:#fff;
+      box-sizing:border-box;
+      z-index:1;
     }
-    
-    .toc-title svg {
-      margin-right: 8px;
-    }
-    
-    .article-toc ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-    
-    .article-toc li {
-      margin: 6px 0;
-      line-height: 1.4;
-    }
-    
-    .article-toc a {
-      text-decoration: none;
-      color: #64748b;
-      font-size: 14px;
-      display: block;
-      padding: 6px 10px;
-      border-radius: 6px;
-      transition: all 0.2s;
-      cursor: pointer;
-      border-left: 2px solid transparent;
-    }
-    
-    .article-toc a:hover {
-      background: #f1f5f9;
-      color: #334155;
-      border-left-color: #cbd5e1;
-    }
-    
-    .article-toc .active {
-      background: #eff6ff;
-      color: #3b82f6;
-      border-left-color: #3b82f6;
-      font-weight: 500;
-    }
-    
-    /* 搜索下拉框样式 */
+
+    /* 搜索结果面板 */
     .search-panel {
       position: fixed;
-      top: 144px; /* 在顶部导航栏和搜索区域下方 */
+      top: 140px;
       left: 0;
       width: 280px;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      max-height: 400px;
-      overflow-y: auto;
-      z-index: 1002;
-      display: none;
-      margin: 0;
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:8px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.1);
+      max-height:400px;
+      overflow-y:auto;
+      z-index:1002;
+      display:none;
     }
-    
-    .search-panel.active {
-      display: block;
+    .search-panel.active { display:block; }
+    .search-result { padding:12px 16px; border-bottom:1px solid #f1f5f9; cursor:pointer; color:#334155; text-decoration:none; display:block; }
+    .search-result .title { font-weight:600; margin-bottom:6px; color:#1e293b; }
+    .search-result .content { font-size:13px; color:#64748b; }
+
+    /* 响应式 */
+    @media (max-width:1200px) {
+      .article-toc { display:none; }
+      .main-content { margin-right: 20px; }
     }
-    
-    .search-result {
-      padding: 12px 16px;
-      border-bottom: 1px solid #f1f5f9;
-      cursor: pointer;
-      text-decoration: none;
-      color: #334155;
-      display: block;
-      transition: background 0.2s;
+    @media (max-width:768px) {
+      .sidebar { display:none; }
+      .main-content { margin-left: 16px; margin-right: 16px; padding:16px; }
+      .search-panel { width: calc(100% - 32px); left: 16px; right:16px; }
     }
-    
-    .search-result:hover {
-      background: #f8fafc;
-    }
-    
-    .search-result:last-child {
-      border-bottom: none;
-    }
-    
-    .search-result .title {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #1e293b;
-    }
-    
-    .search-result .content {
-      font-size: 13px;
-      color: #64748b;
-      line-height: 1.4;
-    }
-    
-    .no-results {
-      padding: 16px;
-      text-align: center;
-      color: #94a3b8;
-      font-size: 14px;
-    }
-    
-    /* 响应式设计 */
-    @media (max-width: 1200px) {
-      .article-toc {
-        display: none;
-      }
-      .main-content {
-        margin-right: 0;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
-      .main-content {
-        margin-left: 0;
-        padding: 20px;
-      }
-      .search-panel {
-        width: 100%;
-        left: 0;
-        right: 0;
-      }
-    }
-    
-    /* 自定义滚动条 */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-    
-    /* 修复Docsify默认样式冲突 */
-    #app {
-      position: static !important;
-    }
-    
-    /* 确保内容从正确位置开始 */
-    .content {
-      padding-top: 0 !important;
-    }
+
+    /* 小调整：不要强制覆盖 Docsify 内部布局的大范围样式 */
+    /* 保持 #app 为 Docsify 根容器 */
   </style>
 </head>
 <body>
-  <!-- Docsify会自动在这里插入顶部导航栏 -->
+  <!-- 自定义顶部导航 -->
+  <nav class="app-nav" role="navigation" aria-label="Main">
+    <div class="left">
+      <div class="app-name">G.Ark Docs</div>
+      <a href="/">首页</a>
+      <a href="/guide">指南</a>
+      <a href="/about">关于</a>
+    </div>
+    <div class="right">
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Docsify 根容器（Docsify 将在此渲染 sidebar / content） -->
   <div id="app"></div>
 
-  <!-- 三栏布局容器 -->
-  <div class="docsify-container">
-    <!-- 左侧边栏 -->
-    <div class="sidebar">
-      <!-- 搜索区域 -->
+  <!-- 三栏自定义布局容器（Docsify 生成的节点会被移动到这些容器内） -->
+  <div class="docsify-container" aria-hidden="false">
+    <div class="sidebar" aria-label="Sidebar">
       <div class="sidebar-search">
         <div class="search-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -408,81 +172,73 @@
           搜索文档
         </div>
         <div class="search-container">
-          <input type="text" id="custom-search-input" class="search-input" placeholder="输入关键词搜索..." />
+          <input id="custom-search-input" class="search-input" placeholder="输入关键词搜索..." />
           <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <span class="search-hotkey">按 / 键快速搜索</span>
-        
-        <!-- 搜索下拉面板 -->
-        <div class="search-panel" id="search-panel">
+
+        <div id="search-panel" class="search-panel">
           <div id="search-results"></div>
         </div>
       </div>
-      
-      <!-- Docsify侧边栏内容 -->
+
+      <!-- Docsify 侧边栏将被移动到此处 -->
       <div data-app-id="sidebar"></div>
     </div>
-    
-    <!-- 主内容区域 -->
-    <div class="main-content">
-      <!-- 内容由Docsify自动渲染 -->
+
+    <div class="main-content" role="main" aria-live="polite">
+      <!-- Docsify 主内容将被移动到此处 -->
     </div>
-    
-    <!-- 右侧文章目录 -->
-    <div class="article-toc">
+
+    <div class="article-toc" aria-label="Table of contents">
       <div class="toc-title">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         文章目录
       </div>
-      <div id="article-toc"></div>
+      <div id="article-toc">
+        <p style="color:#94a3b8; font-size:14px;">正在加载目录…</p>
+      </div>
     </div>
   </div>
 
   <script>
-    // 搜索功能实现
+    /***********************
+     * 自定义搜索与布局插件
+     ***********************/
     let searchData = [];
-    let searchIndex = null;
 
-    // 初始化搜索
+    // 初始化搜索事件监听
     function initSearch() {
-      console.log('初始化搜索功能...');
-      
-      // 监听快捷键
+      // 快捷键 /
       document.addEventListener('keydown', function(e) {
-        // 按 / 键聚焦搜索框
         if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
-          e.preventDefault();
-          const searchInput = document.getElementById('custom-search-input');
-          if (searchInput) {
-            searchInput.focus();
+          const active = document.activeElement;
+          if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) {
+            return;
           }
+          e.preventDefault();
+          const input = document.getElementById('custom-search-input');
+          if (input) { input.focus(); input.select && input.select(); }
         }
-        
-        // 按 ESC 键关闭搜索面板
         if (e.key === 'Escape') {
           closeSearchPanel();
         }
       });
 
-      // 搜索输入监听
-      const searchInput = document.getElementById('custom-search-input');
-      if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
+      const input = document.getElementById('custom-search-input');
+      if (input) {
+        input.addEventListener('input', function(e) {
           performSearch(e.target.value);
         });
-        
-        searchInput.addEventListener('focus', function() {
-          if (this.value) {
-            performSearch(this.value);
-          }
+        input.addEventListener('focus', function() {
+          if (this.value) performSearch(this.value);
         });
       }
 
-      // 点击其他地方关闭搜索面板
       document.addEventListener('click', function(e) {
         if (!e.target.closest('.sidebar-search') && !e.target.closest('.search-panel')) {
           closeSearchPanel();
@@ -490,312 +246,244 @@
       });
     }
 
-    // 构建搜索索引
     function buildSearchIndex() {
-      console.log('构建搜索索引...');
       searchData = [];
-      
-      // 获取所有文档链接
+      // 从侧边栏链接构建文档索引
       const links = document.querySelectorAll('.sidebar-nav a[href]');
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('#') && !href.startsWith('http')) {
-          searchData.push({
-            title: link.textContent.trim(),
-            url: href,
-            content: ''
-          });
-        }
+      links.forEach(a => {
+        const href = a.getAttribute('href');
+        if (!href) return;
+        // 过滤锚点与外链
+        if (href.startsWith('#') || href.startsWith('http')) return;
+        searchData.push({
+          title: a.textContent.trim(),
+          url: href,
+          content: ''
+        });
       });
-      
-      console.log('索引构建完成，找到', searchData.length, '个文档');
     }
 
-    // 执行搜索
     function performSearch(query) {
-      if (!query.trim()) {
-        closeSearchPanel();
-        return;
+      if (!query || !query.trim()) { closeSearchPanel(); return; }
+      const q = query.toLowerCase();
+      const results = [];
+
+      // 标题匹配
+      searchData.forEach(d => {
+        if (d.title.toLowerCase().includes(q)) {
+          results.push({ type: 'document', title: d.title, url: d.url, content: '文档标题匹配' });
+        }
+      });
+
+      // 当前页面匹配（标题与段落）
+      const content = document.querySelector('.markdown-section');
+      if (content) {
+        // headings
+        const headings = content.querySelectorAll('h1,h2,h3,h4,h5,h6');
+        headings.forEach(h => {
+          if (h.textContent.toLowerCase().includes(q)) {
+            if (!h.id) h.id = 'heading-' + Math.random().toString(36).substr(2,9);
+            results.push({ type: 'heading', title: h.textContent, id: h.id, content: '页面标题匹配' });
+          }
+        });
+        // paragraph snippets (最多3个)
+        const paragraphs = content.querySelectorAll('p');
+        let count = 0;
+        paragraphs.forEach(p => {
+          if (count >= 3) return;
+          const txt = p.textContent || '';
+          const idx = txt.toLowerCase().indexOf(q);
+          if (idx !== -1) {
+            if (!p.id) p.id = 'p-' + Math.random().toString(36).substr(2,9);
+            const start = Math.max(0, idx - 30);
+            const end = Math.min(txt.length, idx + query.length + 70);
+            let excerpt = txt.substring(start,end);
+            if (start > 0) excerpt = '...' + excerpt;
+            if (end < txt.length) excerpt = excerpt + '...';
+            results.push({ type: 'paragraph', title: '内容匹配', id: p.id, content: excerpt });
+            count++;
+          }
+        });
       }
 
-      const results = searchDocuments(query);
-      displaySearchResults(results, query);
+      displaySearchResults(results.slice(0,10), query);
     }
 
-    // 搜索文档
-    function searchDocuments(query) {
-      const results = [];
-      const queryLower = query.toLowerCase();
-      
-      // 搜索文档标题
-      searchData.forEach(doc => {
-        if (doc.title.toLowerCase().includes(queryLower)) {
-          results.push({
-            type: 'document',
-            title: doc.title,
-            url: doc.url,
-            content: '文档标题匹配'
-          });
-        }
-      });
-      
-      // 搜索当前页面内容
-      const contentResults = searchCurrentPage(query);
-      results.push(...contentResults);
-      
-      return results.slice(0, 10);
-    }
-
-    // 搜索当前页面内容
-    function searchCurrentPage(query) {
-      const results = [];
-      const content = document.querySelector('.markdown-section');
-      
-      if (!content) return results;
-
-      const queryLower = query.toLowerCase();
-
-      // 搜索标题
-      const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      headings.forEach(heading => {
-        if (heading.textContent.toLowerCase().includes(queryLower)) {
-          if (!heading.id) {
-            heading.id = 'heading-' + Math.random().toString(36).substr(2, 9);
-          }
-          
-          results.push({
-            type: 'heading',
-            title: heading.textContent,
-            element: heading,
-            content: '页面标题匹配',
-            id: heading.id
-          });
-        }
-      });
-
-      // 搜索段落
-      const paragraphs = content.querySelectorAll('p');
-      let paragraphCount = 0;
-      paragraphs.forEach(p => {
-        if (p.textContent.toLowerCase().includes(queryLower) && paragraphCount < 3) {
-          const content = p.textContent;
-          const index = content.toLowerCase().indexOf(queryLower);
-          const start = Math.max(0, index - 30);
-          const end = Math.min(content.length, index + query.length + 70);
-          let excerpt = content.substring(start, end);
-          
-          if (start > 0) excerpt = '...' + excerpt;
-          if (end < content.length) excerpt = excerpt + '...';
-          
-          if (!p.id) {
-            p.id = 'p-' + Math.random().toString(36).substr(2, 9);
-          }
-          
-          results.push({
-            type: 'paragraph',
-            title: '内容匹配',
-            element: p,
-            content: excerpt,
-            id: p.id
-          });
-          
-          paragraphCount++;
-        }
-      });
-
-      return results;
-    }
-
-    // 显示搜索结果
     function displaySearchResults(results, query) {
       const panel = document.getElementById('search-panel');
-      const resultsContainer = document.getElementById('search-results');
-      
-      if (results.length === 0) {
-        resultsContainer.innerHTML = `<div class="no-results">没有找到 "${query}" 的相关结果</div>`;
+      const container = document.getElementById('search-results');
+      if (!panel || !container) return;
+      if (!results || results.length === 0) {
+        container.innerHTML = `<div class="no-results" style="padding:16px;color:#94a3b8;">没有找到 "${escapeHtml(query)}" 的相关结果</div>`;
       } else {
-        resultsContainer.innerHTML = results.map(result => {
-          if (result.type === 'document') {
-            return `
-              <div class="search-result" onclick="navigateToDocument('${result.url}')">
-                <div class="title">📄 ${result.title}</div>
-                <div class="content">${result.content}</div>
-              </div>
-            `;
+        container.innerHTML = results.map(r => {
+          if (r.type === 'document') {
+            return `<div class="search-result" onclick="navigateToDocument('${escapeAttr(r.url)}')"><div class="title">📄 ${escapeHtml(r.title)}</div><div class="content">${escapeHtml(r.content)}</div></div>`;
           } else {
-            return `
-              <div class="search-result" onclick="navigateToSearchResult('${result.id}')">
-                <div class="title">${result.type === 'heading' ? '🔖' : '📝'} ${result.title}</div>
-                <div class="content">${result.content}</div>
-              </div>
-            `;
+            const icon = r.type === 'heading' ? '🔖' : '📝';
+            return `<div class="search-result" onclick="navigateToSearchResult('${escapeAttr(r.id)}')"><div class="title">${icon} ${escapeHtml(r.title)}</div><div class="content">${escapeHtml(r.content)}</div></div>`;
           }
         }).join('');
       }
-      
       panel.classList.add('active');
     }
 
-    // 导航到文档
     function navigateToDocument(url) {
-      window.location.href = url;
       closeSearchPanel();
-    }
-
-    // 导航到搜索结果
-    function navigateToSearchResult(elementId) {
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        closeSearchPanel();
-        
-        // 高亮显示匹配的元素
-        element.style.backgroundColor = '#fff3cd';
-        setTimeout(() => {
-          element.style.backgroundColor = '';
-        }, 2000);
+      // 使用 docsify 的路由（如果要在单页面内跳转）
+      if (window.$docsify && window.$docsify.router) {
+        // fallback to direct location change
+        window.location.href = url;
+      } else {
+        window.location.href = url;
       }
     }
 
-    // 关闭搜索面板
-    function closeSearchPanel() {
-      const panel = document.getElementById('search-panel');
-      panel.classList.remove('active');
+    function navigateToSearchResult(id) {
+      closeSearchPanel();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior:'smooth', block:'start' });
+        // 高亮
+        const orig = el.style.backgroundColor;
+        el.style.backgroundColor = '#fff3cd';
+        setTimeout(() => el.style.backgroundColor = orig || '', 2200);
+      }
     }
 
-    // Docsify配置
+    function closeSearchPanel() {
+      const panel = document.getElementById('search-panel');
+      if (panel) panel.classList.remove('active');
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"]/g, function(m) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m];
+      });
+    }
+    function escapeAttr(s) { return String(s).replace(/'/g, "\\'").replace(/"/g,'\\"'); }
+
+    // 处理目录点击（接收 event）
+    function handleTocClick(id, ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior:'smooth', block:'start' });
+        history.replaceState(null, '', `#${id}`);
+      }
+    }
+
+    // 暴露为全局（onclick 内会引用）
+    window.navigateToDocument = navigateToDocument;
+    window.navigateToSearchResult = navigateToSearchResult;
+    window.handleTocClick = handleTocClick;
+
+    /***********************
+     * Docsify 配置（在加载 docsify 脚本前定义）
+     ***********************/
     window.$docsify = {
       name: 'G.Ark Docs',
       repo: '',
+      loadNavbar: false,   // 使用自定义顶部导航，因此禁用 docsify 的 navbar
       loadSidebar: true,
-      loadNavbar: true,
       subMaxLevel: 3,
-      alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'
-      },
-      // 禁用Docsify自带的搜索，使用我们的自定义搜索
-      search: null,
-      // 自定义插件配置
+      search: null,        // 禁用 docsify 自带搜索，使用自定义搜索
       plugins: [
         function(hook, vm) {
+          // mounted 在 docsify 初始化后触发一次（元素存在后）
           hook.mounted(function() {
-            // 移动Docsify生成的侧边栏到我们的容器中
+            // 将 docsify 生成的侧边栏（.sidebar-nav）移动到我们自定义的侧边栏容器（data-app-id="sidebar"）
             const originalSidebar = document.querySelector('.sidebar-nav');
             const ourSidebarContainer = document.querySelector('[data-app-id="sidebar"]');
-            if (originalSidebar && ourSidebarContainer) {
+            if (originalSidebar && ourSidebarContainer && !ourSidebarContainer.contains(originalSidebar)) {
               ourSidebarContainer.appendChild(originalSidebar);
             }
-            
-            // 移动主内容到我们的容器中
-            const originalContent = document.querySelector('.markdown-section');
+
+            // 将 docsify 的 content（.content）移动到 main-content 中（避免重复移动）
+            const originalContent = document.querySelector('.content');
             const ourContentContainer = document.querySelector('.main-content');
-            if (originalContent && ourContentContainer) {
+            if (originalContent && ourContentContainer && !ourContentContainer.contains(originalContent)) {
               ourContentContainer.appendChild(originalContent);
             }
-            
-            // 构建搜索索引
-            setTimeout(buildSearchIndex, 500);
+
+            // 初始化搜索监听
+            setTimeout(initSearch, 200);
+            // 构建索引（稍延迟，保证 sidebar 渲染完成）
+            setTimeout(buildSearchIndex, 300);
           });
-          
+
+          // 页面每次渲染后都会执行 doneEach
           hook.doneEach(function() {
-            // 获取当前页面的标题
-            const content = document.querySelector('.markdown-section');
-            if (!content) return;
-            
-            const headings = content.querySelectorAll('h1, h2, h3, h4');
-            const tocContainer = document.getElementById('article-toc');
-            
-            if (headings.length > 0) {
-              let tocHTML = '<ul>';
-              
-              headings.forEach((heading, index) => {
-                const level = parseInt(heading.tagName.substring(1));
-                const text = heading.textContent;
-                const id = heading.id || `heading-${index}`;
-                
-                if (!heading.id) {
-                  heading.id = id;
-                }
-                
-                const padding = (level - 1) * 15;
-                
-                tocHTML += `
-                  <li style="padding-left: ${padding}px">
-                    <a href="#${id}" data-id="${id}" onclick="handleTocClick('${id}')">${text}</a>
-                  </li>
-                `;
-              });
-              
-              tocHTML += '</ul>';
-              tocContainer.innerHTML = tocHTML;
-              
-              addScrollListener(headings);
-            } else {
-              tocContainer.innerHTML = '<p style="color: #94a3b8; font-size: 14px;">本文暂无目录</p>';
-            }
-            
-            // 每次页面加载后重新构建搜索索引
+            // 重建侧边栏索引（侧边栏可能在导航切换后更新）
             setTimeout(buildSearchIndex, 100);
-          });
-          
-          function addScrollListener(headings) {
-            const tocLinks = document.querySelectorAll('#article-toc a');
-            const observerOptions = {
-              rootMargin: '-20% 0px -70% 0px',
-              threshold: 0
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
+
+            // 构建文章目录（基于当前 .markdown-section 的标题）
+            const content = document.querySelector('.markdown-section');
+            const tocContainer = document.getElementById('article-toc');
+            if (!tocContainer) return;
+
+            if (!content) {
+              tocContainer.innerHTML = '<p style="color:#94a3b8; font-size:14px;">本文暂无目录</p>';
+              return;
+            }
+
+            const headings = content.querySelectorAll('h1,h2,h3,h4');
+            if (headings.length === 0) {
+              tocContainer.innerHTML = '<p style="color:#94a3b8; font-size:14px;">本文暂无目录</p>';
+              return;
+            }
+
+            let html = '<ul style="list-style:none;padding-left:0;margin:0;">';
+            headings.forEach((heading, idx) => {
+              const level = parseInt(heading.tagName.substring(1));
+              if (!heading.id) heading.id = `heading-${Date.now().toString(36)}-${idx}`;
+              const padding = (level - 1) * 12;
+              const text = heading.textContent.trim();
+              html += `<li style="padding-left:${padding}px;margin:6px 0;">
+                <a href="#${heading.id}" onclick="handleTocClick('${heading.id}', event)" style="text-decoration:none;color:#64748b;display:block;padding:6px 8px;border-radius:6px;">${escapeHtml(text)}</a>
+              </li>`;
+            });
+            html += '</ul>';
+            tocContainer.innerHTML = html;
+
+            // 添加交叉观察，用于高亮当前正在阅读的标题
+            const observerOptions = { root: null, rootMargin: '-30% 0px -60% 0px', threshold: 0 };
+            const obs = new IntersectionObserver((entries) => {
               entries.forEach(entry => {
                 const id = entry.target.id;
-                const tocLink = document.querySelector(`#article-toc a[href="#${id}"]`);
-                
+                const link = document.querySelector(`#article-toc a[href="#${id}"]`);
+                const allLinks = document.querySelectorAll('#article-toc a');
                 if (entry.isIntersecting) {
-                  tocLinks.forEach(link => link.classList.remove('active'));
-                  if (tocLink) {
-                    tocLink.classList.add('active');
-                  }
+                  allLinks.forEach(l => l.classList.remove('active'));
+                  if (link) link.classList.add('active');
                 }
               });
             }, observerOptions);
-            
-            headings.forEach(heading => {
-              observer.observe(heading);
-            });
-          }
+
+            // 先取消之前的观察（避免重复）
+            try {
+              // 观察每个 heading
+              headings.forEach(h => {
+                obs.observe(h);
+              });
+            } catch (e) {
+              // ignore
+            }
+          });
         }
       ]
     };
-
-    // 处理目录点击事件
-    function handleTocClick(id) {
-      event.preventDefault();
-      const targetElement = document.getElementById(id);
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        history.replaceState(null, null, `#${id}`);
-      }
-    }
-
-    // 页面加载完成后初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(initSearch, 1000);
-    });
-
   </script>
 
+  <!-- Docsify 主脚本（必须在 window.$docsify 定义之后） -->
   <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
-  <!-- 复制代码到剪贴板 -->
+
+  <!-- 可选插件 -->
   <script src="//unpkg.com/docsify-copy-code"></script>
-  <!-- 图片缩放 -->
   <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
-  <!-- 字数统计 -->
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-  <!-- Java代码高亮 -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
 </body>
 </html>
+
