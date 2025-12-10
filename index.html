@@ -79,34 +79,16 @@
     .sidebar-nav a { display:block; padding:8px 12px; border-radius:6px; color:#475569; text-decoration:none; font-weight:500; }
     .sidebar-nav a:hover { background:#f1f5f9; color:#1e293b; }
 
-    /* 右侧目录 */
-    .article-toc {
-      position: fixed;
-      right: 0;
-      top: 64px;
-      width: 300px;
-      height: calc(100vh - 64px);
-      background:#fff;
-      border-left:1px solid #e2e8f0;
-      padding:20px;
-      overflow-y:auto;
-      z-index: 900;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.04);
-    }
-    .toc-title { font-weight:600; color:#1e293b; margin-bottom:12px; display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:2px solid #3b82f6; }
-    .article-toc a { display:block; padding:6px 8px; border-radius:6px; color:#64748b; text-decoration:none; }
-    .article-toc a:hover { background:#f1f5f9; color:#334155; }
-    .article-toc a.active { background:#eff6ff; color:#3b82f6; font-weight:600; border-left:2px solid #3b82f6; }
-
-    /* 中间主内容 */
+    /* 中间主内容 - 修改为两栏布局 */
     .main-content {
       flex:1;
-      margin: 0 320px 0 280px; /* 左右预留宽度（与侧栏宽度一致 + 间距） */
+      margin: 0 20px 0 280px; /* 左侧预留侧栏宽度，右侧只有20px间距 */
       padding: 28px 40px;
       min-height: calc(100vh - 64px);
       background:#fff;
       box-sizing:border-box;
       z-index:1;
+      max-width: calc(100% - 300px); /* 确保内容不会太宽 */
     }
 
     /* 搜索结果面板 */
@@ -131,12 +113,16 @@
 
     /* 响应式 */
     @media (max-width:1200px) {
-      .article-toc { display:none; }
       .main-content { margin-right: 20px; }
     }
     @media (max-width:768px) {
       .sidebar { display:none; }
-      .main-content { margin-left: 16px; margin-right: 16px; padding:16px; }
+      .main-content { 
+        margin-left: 16px; 
+        margin-right: 16px; 
+        padding:16px;
+        max-width: calc(100% - 32px);
+      }
       .search-panel { width: calc(100% - 32px); left: 16px; right:16px; }
     }
 
@@ -161,7 +147,7 @@
   <!-- Docsify 根容器（Docsify 将在此渲染 sidebar / content） -->
   <div id="app"></div>
 
-  <!-- 三栏自定义布局容器（Docsify 生成的节点会被移动到这些容器内） -->
+  <!-- 两栏自定义布局容器（去掉了文章目录栏） -->
   <div class="docsify-container" aria-hidden="false">
     <div class="sidebar" aria-label="Sidebar">
       <div class="sidebar-search">
@@ -191,18 +177,8 @@
     <div class="main-content" role="main" aria-live="polite">
       <!-- Docsify 主内容将被移动到此处 -->
     </div>
-
-    <div class="article-toc" aria-label="Table of contents">
-      <div class="toc-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        文章目录
-      </div>
-      <div id="article-toc">
-        <p style="color:#94a3b8; font-size:14px;">正在加载目录…</p>
-      </div>
-    </div>
+    
+    <!-- 去掉了 .article-toc 右侧目录栏 -->
   </div>
 
   <script>
@@ -363,20 +339,9 @@
     }
     function escapeAttr(s) { return String(s).replace(/'/g, "\\'").replace(/"/g,'\\"'); }
 
-    // 处理目录点击（接收 event）
-    function handleTocClick(id, ev) {
-      if (ev && ev.preventDefault) ev.preventDefault();
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior:'smooth', block:'start' });
-        history.replaceState(null, '', `#${id}`);
-      }
-    }
-
     // 暴露为全局（onclick 内会引用）
     window.navigateToDocument = navigateToDocument;
     window.navigateToSearchResult = navigateToSearchResult;
-    window.handleTocClick = handleTocClick;
 
     /***********************
      * Docsify 配置（在加载 docsify 脚本前定义）
@@ -416,59 +381,6 @@
           hook.doneEach(function() {
             // 重建侧边栏索引（侧边栏可能在导航切换后更新）
             setTimeout(buildSearchIndex, 100);
-
-            // 构建文章目录（基于当前 .markdown-section 的标题）
-            const content = document.querySelector('.markdown-section');
-            const tocContainer = document.getElementById('article-toc');
-            if (!tocContainer) return;
-
-            if (!content) {
-              tocContainer.innerHTML = '<p style="color:#94a3b8; font-size:14px;">本文暂无目录</p>';
-              return;
-            }
-
-            const headings = content.querySelectorAll('h1,h2,h3,h4');
-            if (headings.length === 0) {
-              tocContainer.innerHTML = '<p style="color:#94a3b8; font-size:14px;">本文暂无目录</p>';
-              return;
-            }
-
-            let html = '<ul style="list-style:none;padding-left:0;margin:0;">';
-            headings.forEach((heading, idx) => {
-              const level = parseInt(heading.tagName.substring(1));
-              if (!heading.id) heading.id = `heading-${Date.now().toString(36)}-${idx}`;
-              const padding = (level - 1) * 12;
-              const text = heading.textContent.trim();
-              html += `<li style="padding-left:${padding}px;margin:6px 0;">
-                <a href="#${heading.id}" onclick="handleTocClick('${heading.id}', event)" style="text-decoration:none;color:#64748b;display:block;padding:6px 8px;border-radius:6px;">${escapeHtml(text)}</a>
-              </li>`;
-            });
-            html += '</ul>';
-            tocContainer.innerHTML = html;
-
-            // 添加交叉观察，用于高亮当前正在阅读的标题
-            const observerOptions = { root: null, rootMargin: '-30% 0px -60% 0px', threshold: 0 };
-            const obs = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                const id = entry.target.id;
-                const link = document.querySelector(`#article-toc a[href="#${id}"]`);
-                const allLinks = document.querySelectorAll('#article-toc a');
-                if (entry.isIntersecting) {
-                  allLinks.forEach(l => l.classList.remove('active'));
-                  if (link) link.classList.add('active');
-                }
-              });
-            }, observerOptions);
-
-            // 先取消之前的观察（避免重复）
-            try {
-              // 观察每个 heading
-              headings.forEach(h => {
-                obs.observe(h);
-              });
-            } catch (e) {
-              // ignore
-            }
           });
         }
       ]
@@ -486,4 +398,3 @@
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
 </body>
 </html>
-
